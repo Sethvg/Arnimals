@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "./colors";
+
+$theme-colors: (
+  primary: $primary,
+  primary-dark: $primary-dark,
+  primary-light:$primary-light,
+  secondary:$secondary,
+  primary-text-color:$primary-text-color,
+  icon-color: $icon-color,
+  divider:$divider,
+  secondary-text-color:$secondary-text-color,
+  danger: red
+) !default;
+
+@import "~bootstrap/scss/bootstrap";
+@import "~ng2-toastr/ng2-toastr";
+
+@each $name, $color in $theme-colors {
+  .background-#{$name} {
+    background-color: $color;
+  }
+}

@@ -1,0 +1,32 @@
+@import "../../colors";
+
+$header-height:70px;
+$header-top-height:20px;
+$ico-padding:5px;
+.header {
+  height: $header-height;
+  padding: $ico-padding;
+  display:flex;
+  align-items: flex-end;}
+
+  .header-top{
+  height: $header-top-height;
+}
+
+.header-ico{
+  height:$header-height - 2*$ico-padding;
+  display:inline-block;
+}
+
+.img {
+  display: flex;
+  justify-content: baseline;
+  flex: 0 0 $header-height - 2*$ico-padding;
+}
+
+.font{
+  margin-left:20px;
+  font-size:40px;
+  color: $primary-text-color;
+  flex: 1 1 0;
+}
