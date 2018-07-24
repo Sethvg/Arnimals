@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27917.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureMLLibrary", "AzureMLLibrary\AzureMLLibrary.csproj", "{065F4472-2872-4D5C-B273-07FC0F364E12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureMLTest", "AzureMLTest\AzureMLTest.csproj", "{F5C6F5CB-ED10-421C-B27A-9EA9627C7F13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArnimalAPITest", "ArnimalAPITest\ArnimalAPITest.csproj", "{F5C6F5CB-ED10-421C-B27A-9EA9627C7F13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
