@@ -1,7 +1,13 @@
+@import "../header/header.component";
+
 .left-nav{
   flex: 0 0 300px;
 }
 
 .view-field{
   flex: 1;
+}
+
+.dash{
+  margin-top:$header-height + $header-top-height;
 }

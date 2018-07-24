@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid mt-5">
   <div class="row justify-content-center">
     <div class="col-4">
       <h2>Add Animal</h2>
@@ -32,15 +32,15 @@
       </div>
       <div class="form-group">
         <input type="file" id="file" name="file" multiple hidden (change)="selecteFiles($event)"/>
-        <label class="btn btn-lg btn-primary btn-block" for="file">
-          Test Out Some Images
+        <label class="btn btn-sm btn-outline-primary btn-block" for="file">
+          Training Images
         </label>
         <div *ngFor="let file of animal.training">
           {{file.name}}
         </div>
       </div>
 
-      <button class="btn btn-block btn-primary btn-sm"> Add Animal </button>
+      <button class="btn btn-block btn-primary btn-sm mt-5"> Add Animal </button>
     </div>
   </div>
 </div>
