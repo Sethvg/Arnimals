@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace AzureMLLibrary.Prediction
 {
@@ -53,7 +50,7 @@ namespace AzureMLLibrary.Prediction
             client.DefaultRequestHeaders.Add("Prediction-Key", AuthenticationManager.GetPredictionKey());
 
             HttpResponseMessage response;
-            string contentJson = "{\"Url\":\"" + imageUrl + "\"}";
+            string contentJson = CSPrediction.CreateUrlContentBody(imageUrl);
 
             using (HttpContent content = new StringContent(contentJson))
             {
@@ -61,6 +58,13 @@ namespace AzureMLLibrary.Prediction
                 response = await client.PostAsync(CSPrediction.PredictionUrl_ImageUrl, content);
                 return await response.Content.ReadAsStringAsync();
             }
+        }
+
+        private static string CreateUrlContentBody(string imageUrl)
+        {
+            JObject jObject = new JObject();
+            jObject.Add("Url", imageUrl);
+            return jObject.ToString();
         }
     }
 }
