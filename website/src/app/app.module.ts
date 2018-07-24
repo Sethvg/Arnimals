@@ -23,6 +23,9 @@ import { DonationsComponent } from './donations/donations.component';
 import { AddComponent } from './dashboard/animal/add/add.component';
 import {ApiService} from "./api.service";
 import {FormsModule} from "@angular/forms";
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HttpModule} from "@angular/http";
+import { AddAnimalCardComponent } from './dashboard/animal/add/add-animal-card/add-animal-card.component';
 
 @NgModule({
   declarations: [
@@ -42,10 +45,12 @@ import {FormsModule} from "@angular/forms";
     AnimalInfoComponent,
     TestComponent,
     DonationsComponent,
-    AddComponent
+    AddComponent,
+    AddAnimalCardComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only
