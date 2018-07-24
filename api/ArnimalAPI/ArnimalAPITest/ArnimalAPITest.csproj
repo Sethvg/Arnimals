@@ -50,9 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AzureMLLibrary\CSPredictionTests.cs" />
+    <Compile Include="AzureMLLibrary\CSUploadAndTrainTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +67,11 @@
     <Content Include="TestAssets\IMG_9681.JPG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestAssets\Peter_1.png" />
+    <Content Include="TestAssets\Peter_2.jpg" />
+    <Content Include="TestAssets\Peter_3.jpg" />
+    <Content Include="TestAssets\Peter_4.jpg" />
+    <Content Include="TestAssets\Peter_5.jpg" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
