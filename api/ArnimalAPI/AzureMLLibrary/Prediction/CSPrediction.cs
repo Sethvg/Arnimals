@@ -8,8 +8,8 @@ namespace AzureMLLibrary.Prediction
 {
     public class CSPrediction
     {
-        const string PredictionUrl_ImagePath = "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/76e820e5-5b11-49d5-872e-05a672e3689c/image?iterationId=a57021f9-5a35-490b-afee-12dd0d786fca";
-        const string PredictionUrl_ImageUrl = "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/76e820e5-5b11-49d5-872e-05a672e3689c/url?iterationId=a57021f9-5a35-490b-afee-12dd0d786fca";
+        const string PredictionUrl_ImagePath = "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/76e820e5-5b11-49d5-872e-05a672e3689c/image";
+        const string PredictionUrl_ImageUrl = "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/76e820e5-5b11-49d5-872e-05a672e3689c/url";
 
         private static byte[] GetImageAsByteArray(string imageFilePath)
         {
