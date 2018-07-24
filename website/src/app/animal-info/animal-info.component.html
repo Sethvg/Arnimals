@@ -1,0 +1,36 @@
+<div class="card" [ngClass]="{'min':min}" *ngIf="animal != null">
+  <img class="card-img-top" [src]="animal.img" alt="Card image cap">
+  <div class="card-header text-center bg-primary-light">
+    <b>{{animal.name}}</b>
+  </div>
+  <div class="card-body">
+    <label class="mt-4">
+      Type</label>
+    <div>{{animal.type}}</div>
+    <hr/>
+    <label  class="mt-4">
+      Description</label>
+    <div>{{animal.description}}</div>
+
+    <div *ngIf="!min"><label  class="mt-4">
+      <hr/>
+      Age</label>
+    <div>{{animal.age}}</div>
+    <hr/>
+
+    <label  class="mt-4">
+      Height</label>
+    <div>{{animal.height}}</div>
+    <hr/>
+
+    <label  class="mt-4">
+      Weight</label>
+    <div>{{animal.weight}}</div>
+    <hr/>
+
+    <label  class="mt-4">
+      Seen By</label>
+    <div>{{animal.hitCount}}
+    </div></div>
+  </div>
+</div>

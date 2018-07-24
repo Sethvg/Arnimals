@@ -1,0 +1,57 @@
+@import "../../colors";
+
+$btn-height: 100px;
+$sub-btn-height: 40px;
+
+.left-nav-container{
+  border-right:1px solid $primary;
+  min-height: 95vh;
+  padding:0px;
+}
+
+.nav-button-parent{
+  width:100%;
+  height: $btn-height;
+  text-align: left;
+  display:flex;
+  justify-content: left;
+  cursor:pointer;
+}
+.nav-button-parent:hover {
+  background-color:$primary;
+}
+.nav-button-text{
+  font-size:30px;
+  align-self: center;
+  padding-left:20px;
+}
+
+.nav-button-sub-text{
+  font-size:16px;
+  align-self: center;
+  padding-left:10px;
+}
+
+.nav-sub-button{
+  height: $sub-btn-height;
+  width:100%;
+  cursor:pointer;
+  padding-left:20px;
+}
+
+.nav-sub-button:hover{
+  background-color:darkgrey;
+}
+
+.selected{
+  background-color: $primary-light;
+}
+
+.nav-sub{
+  background-color: lightgrey;
+}
+
+
+.active{
+  border-left:10px solid $primary-dark
+}

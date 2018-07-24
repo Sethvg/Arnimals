@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\e2e",
+    "\\e2e\\src",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\login",
+    "\\src\\app\\login\\login-card"
+  ],
+  "SelectedNode": "\\src\\app\\app.routes.ts",
+  "PreviewInSolutionExplorer": false
+}

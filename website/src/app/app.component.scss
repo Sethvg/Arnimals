@@ -1,0 +1,5 @@
+@import "header/header.component";
+
+.app-container{
+  padding-top:$header-height + $header-top-height;
+}

@@ -30,3 +30,13 @@ $ico-padding:5px;
   color: $primary-text-color;
   flex: 1 1 0;
 }
+
+.container-fluid{
+  position: fixed;
+  top:0;
+  right:0;
+  left:0;
+  padding:0px;
+  height: $header-height + $header-top-height;
+  z-index: 1000000;
+}

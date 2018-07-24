@@ -1,0 +1,19 @@
+@import "../../../colors";
+
+.card{
+  border-width: 2px;
+  border-color: $primary-dark;
+  cursor:pointer;
+}
+
+.addIcon{
+  width:40%;
+}
+
+img{
+  max-width:100%;
+}
+
+.card:hover{
+  background: $primary-light;
+}

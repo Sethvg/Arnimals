@@ -1,0 +1,16 @@
+@import "../../colors";
+
+label{
+  font-weight: bold;
+}
+
+.min{
+  height: 600px;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.card{
+  border-width: 2px;
+  border-color: $primary-dark;
+}

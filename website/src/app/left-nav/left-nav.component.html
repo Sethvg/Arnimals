@@ -1,0 +1,58 @@
+<div class="left-nav-container">
+  <div>
+    <div [ngClass]="{'selected':isSelected('animals'), 'active':isActive('animals','')}">
+      <div class="nav-button-parent"  [routerLink]="['animals']">
+        <span class="nav-button-text">Animals</span>
+      </div>
+    </div>
+
+    <div class="expanded d-flex flex-column justify-content-center">
+      <div class="nav-sub-button align-self-start d-flex" [ngClass]="{ 'active':isActive('animals','add')}" [routerLink]="['animals', 'add']">
+        <span class="nav-button-sub-text align-self-center">+</span>
+      </div>
+      <div class="nav-sub-button align-self-start d-flex" [ngClass]="{ 'active':isActive('animals',animal.name)}"*ngFor="let animal of getAnimals()" [routerLink]="['animals', animal.name]">
+        <span class="nav-button-sub-text align-self-center">{{animal.name}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div [ngClass]="{'selected':isSelected('organization'), 'active':isActive('organization','')}">
+      <div class="nav-button-parent" [routerLink]="['organization']">
+        <span class="nav-button-text">Organization</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div [ngClass]="{'selected':isSelected('donations'), 'active':isActive('donations','')}">
+      <div class="nav-button-parent" [routerLink]="['donations']">
+        <span class="nav-button-text">Donations</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div [ngClass]="{'selected':isSelected('rewards'), 'active':isActive('rewards','')}">
+      <div class="nav-button-parent" [routerLink]="['rewards']">
+        <span class="nav-button-text">Rewards</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div [ngClass]="{'selected':isSelected('settings'), 'active':isActive('settings','')}">
+      <div class="nav-button-parent" [routerLink]="['settings']">
+        <span class="nav-button-text">Settings</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div [ngClass]="{'selected':isSelected('test'), 'active':isActive('test','')}">
+      <div class="nav-button-parent" [routerLink]="['test']">
+        <span class="nav-button-text">Test</span>
+      </div>
+    </div>
+  </div>
+</div>

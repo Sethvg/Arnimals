@@ -1,0 +1,23 @@
+<div class="container-fluid" style="height:100vh">
+  <div class="row justify-content-center">
+    <div class="col-4" style="margin-top:20vh">
+      <div class="card">
+        <div class="card-header bg-primary">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link" [ngClass]="{'active': active=='login'}" (click)="setActive('login')">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [ngClass]="{'active': active=='register'}"
+                 (click)="setActive('register')">Register</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <app-login-card *ngIf="active=='login'"></app-login-card>
+          <app-register-card *ngIf="active=='register'"></app-register-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
