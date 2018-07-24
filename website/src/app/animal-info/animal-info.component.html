@@ -1,10 +1,10 @@
-<div class="card" [ngClass]="{'min':min}" *ngIf="animal != null">
+<div class="card" *ngIf="animal != null">
   <img class="card-img-top" [src]="animal.img" alt="Card image cap">
   <div class="card-header text-center bg-primary-light">
     <b>{{animal.name}}</b>
   </div>
   <div class="card-body">
-    <label class="mt-4">
+    <div [ngClass]="{'min':min}"><label class="mt-4">
       Type</label>
     <div>{{animal.type}}</div>
     <hr/>
@@ -32,5 +32,10 @@
       Seen By</label>
     <div>{{animal.hitCount}}
     </div></div>
+</div>
+   <div *ngIf="hasDelete"> <button class="btn btn-danger btn-block btn-sm">
+     Delete
+   </button></div>
+
   </div>
 </div>

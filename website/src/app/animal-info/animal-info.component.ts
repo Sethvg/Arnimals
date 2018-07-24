@@ -14,6 +14,9 @@ export class AnimalInfoComponent implements OnInit {
   @Input()
   public min : boolean = false;
 
+  @Input()
+  public hasDelete : boolean = false;
+
   constructor() { }
 
   ngOnInit() {

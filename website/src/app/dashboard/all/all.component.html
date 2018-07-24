@@ -2,7 +2,7 @@
   <div class="container-fluid mt-3">
     <div class="row">
       <div class="col-2" *ngFor="let animal of getAnimals()" [routerLink]="[animal.name]">
-        <app-animal-info [_animal]="animal" [min]="true"></app-animal-info>
+        <app-animal-info [_animal]="animal" [min]="true" [hasDelete]="true"></app-animal-info>
       </div>
       <div class="col-2 card d-flex justify-content-center" [routerLink]="['add']">
         <div class="addIcon align-self-center">

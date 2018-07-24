@@ -7,4 +7,5 @@ export type Animal = {
   age ?: number;
   weight ?: string;
   height ?: string;
+  training ?: File[]
 }

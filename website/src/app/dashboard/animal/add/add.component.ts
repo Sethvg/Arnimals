@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ApiService} from "../../../api.service";
+import {Animal} from "../../../../models/animal";
 
 @Component({
   selector: 'app-add',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddComponent implements OnInit {
 
-  constructor() { }
+  public animal : Animal = {name : '', type : '', img : ''};
+
+  selecteFiles($event) {
+    this.animal.training = $event.srcElement.files;
+  }
+
+  constructor(private http : ApiService) { }
 
   ngOnInit() {
+  }
+
+  public add(){
+    this.http.addAnimals(this.animal).subscribe(result => {
+      console.log(result);
+    })
   }
 
 }

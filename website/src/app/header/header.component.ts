@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -7,7 +6,6 @@ import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 })
 export class HeaderComponent implements OnInit {
 
-  headerIcon = faFeatherAlt;
 
   constructor() { }
 

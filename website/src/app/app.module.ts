@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { CreditsComponent } from './credits/credits.component';
 import { LoginComponent } from './login/login.component';
 import {RouterModule} from "@angular/router";
@@ -22,6 +21,8 @@ import { AnimalInfoComponent } from './animal-info/animal-info.component';
 import { TestComponent } from './test/test.component';
 import { DonationsComponent } from './donations/donations.component';
 import { AddComponent } from './dashboard/animal/add/add.component';
+import {ApiService} from "./api.service";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -48,9 +49,10 @@ import { AddComponent } from './dashboard/animal/add/add.component';
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only
-    )
+    ),
+    FormsModule
   ],
-  providers: [AnimalService],
+  providers: [AnimalService, ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

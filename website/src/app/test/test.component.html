@@ -1,7 +1,17 @@
 <div class="container-fluid">
   <div class="row mt-5 justify-content-center">
     <div class="col-4">
-      <button class="btn btn-lg btn-block btn-primary">Upload Test Image</button>
+      <input type="file" id="file" name="file" multiple hidden (change)="selecteFiles($event)"/>
+      <label class="btn btn-lg btn-primary btn-block" for="file">
+        Test Out Some Images
+      </label>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-4">
+      <div *ngFor="let file of files">
+        {{file.name}}
+      </div>
     </div>
   </div>
 </div>
