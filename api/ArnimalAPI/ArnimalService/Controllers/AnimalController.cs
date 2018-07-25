@@ -53,32 +53,27 @@ namespace ArnimalService.Controllers
         {
             var file = form.Files[0];
             string response = CSPrediction.MakePredictionRequestByImagePath(saveFormFile(file)).Result;
-
             JObject predictionObj = (JObject)JsonConvert.DeserializeObject(response);
             JToken token = predictionObj.GetValue("predictions");
 
-            double maxProb = 0;
-            string maxName = string.Empty;
-
+            SortedDictionary<double, Animal> animals = new SortedDictionary<double, Animal>();
             foreach (JToken child in token.Children())
             {
                 double prob = child.SelectToken("probability").ToObject<double>();
                 string name = child.SelectToken("tagName").ToObject<string>();
 
-                if (maxProb < prob)
+                Animal animal = this._context.Animals.Where(a => a.Name.ToLower().Equals(name.ToLower()))?.First();
+                if (animal != null)
                 {
-                    maxProb = prob;
-                    maxName = name;
+                    animals.Add(prob, animal);
                 }
-
             }
 
-            IEnumerable<Animal> animals = this._context.Animals.Where(a => a.Name.ToLower().Equals(maxName.ToLower()));
             if (animals.Any())
             {
-                return Ok(animals.First());
+                return Ok(animals.TakeLast(2));
             }
-            return Ok(new Animal());
+            return NotFound();
         }
 
         private string saveFormFile(IFormFile file)
