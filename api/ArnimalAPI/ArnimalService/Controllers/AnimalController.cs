@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -51,7 +52,33 @@ namespace ArnimalService.Controllers
         public IActionResult Detect([FromForm] IFormCollection form)
         {
             var file = form.Files[0];
-            return Ok(CSPrediction.MakePredictionRequestByImagePath(saveFormFile(file)).Result);
+            string response = CSPrediction.MakePredictionRequestByImagePath(saveFormFile(file)).Result;
+
+            JObject predictionObj = (JObject)JsonConvert.DeserializeObject(response);
+            JToken token = predictionObj.GetValue("predictions");
+
+            double maxProb = 0;
+            string maxName = string.Empty;
+
+            foreach (JToken child in token.Children())
+            {
+                double prob = child.SelectToken("probability").ToObject<double>();
+                string name = child.SelectToken("tagName").ToObject<string>();
+
+                if (maxProb < prob)
+                {
+                    maxProb = prob;
+                    maxName = name;
+                }
+
+            }
+
+            IEnumerable<Animal> animals = this._context.Animals.Where(a => a.Name.ToLower().Equals(maxName.ToLower()));
+            if (animals.Any())
+            {
+                return Ok(animals.First());
+            }
+            return Ok(new Animal());
         }
 
         private string saveFormFile(IFormFile file)
@@ -69,20 +96,20 @@ namespace ArnimalService.Controllers
         {
 
             List<string> fileList = new List<string>();
-            foreach(IFormFile file in form.Files)
+            foreach (IFormFile file in form.Files)
             {
                 string saved = this.saveFormFile(file);
                 fileList.Add(saved);
             }
 
             Animal animal = null;
-            foreach(KeyValuePair<string, StringValues> key in form)
+            foreach (KeyValuePair<string, StringValues> key in form)
             {
                 if (key.Key.Equals("animal"))
                 {
                     animal = JsonConvert.DeserializeObject<Animal>(key.Value[0]);
                 }
-            }       
+            }
 
             // Insert it into ML and run ML
             Guid imageTag = CSUploadAndTrain.UploadImageAndReturnTag(ProjectId, TrainingKey, fileList);
@@ -99,7 +126,7 @@ namespace ArnimalService.Controllers
         public IActionResult Delete(long id)
         {
             var animal = _context.Animals.Find(id);
-          
+
             CSUploadAndTrain.RemoveImagesByTag(ProjectId, TrainingKey, Guid.Parse(animal.Id));
 
             _context.Animals.Remove(animal);
