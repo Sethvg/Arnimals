@@ -62,7 +62,7 @@ namespace ArnimalService.Controllers
                 double prob = child.SelectToken("probability").ToObject<double>();
                 string tagId = child.SelectToken("tagId").ToObject<string>();
 
-                Animal animal = this._context.Animals.Where(a => a.Id.ToLower().Equals(tagId.ToLower()))?.First();
+                Animal animal = this._context.Animals.Where(a => a.Id.ToLower().Equals(tagId.ToLower()))?.FirstOrDefault();
                 if (animal != null)
                 {
                     animals.Add(prob, animal);
