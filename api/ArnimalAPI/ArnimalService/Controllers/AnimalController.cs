@@ -71,7 +71,7 @@ namespace ArnimalService.Controllers
 
             if (animals.Any())
             {
-                return Ok(animals.TakeLast(2));
+                return Ok(animals);
             }
             return NotFound();
         }
