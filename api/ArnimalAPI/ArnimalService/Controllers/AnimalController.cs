@@ -78,7 +78,7 @@ namespace ArnimalService.Controllers
             {
                 return Ok(animals.First());
             }
-            return Ok(new Animal());
+            return NotFound();
         }
 
         private string saveFormFile(IFormFile file)
