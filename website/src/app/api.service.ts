@@ -7,7 +7,7 @@ import {Animal} from "../models/animal";
 })
 export class ApiService {
 
-  private url : string = "http://localhost:4200"
+  private url : string = "http://mabriste-pvm0.westcentralus.cloudapp.azure.com:5000/api/animal"
   constructor(private http : HttpClient) { }
 
   public getAnimals(){
@@ -15,7 +15,7 @@ export class ApiService {
   }
 
   public addAnimals(animal : Animal){
-    return this.http.post(this.url + "/animals", animal)
+    return this.http.post(this.url + "/add", animal)
   }
 
   public deleteAnimal(animal : Animal){
