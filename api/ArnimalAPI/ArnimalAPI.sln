@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureMLLibrary", "AzureMLLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArnimalAPITest", "ArnimalAPITest\ArnimalAPITest.csproj", "{F5C6F5CB-ED10-421C-B27A-9EA9627C7F13}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArnimalService", "ArnimalService\ArnimalService.csproj", "{CE78CB69-12C9-477B-9570-04B2225AA605}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F5C6F5CB-ED10-421C-B27A-9EA9627C7F13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5C6F5CB-ED10-421C-B27A-9EA9627C7F13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5C6F5CB-ED10-421C-B27A-9EA9627C7F13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE78CB69-12C9-477B-9570-04B2225AA605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE78CB69-12C9-477B-9570-04B2225AA605}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE78CB69-12C9-477B-9570-04B2225AA605}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE78CB69-12C9-477B-9570-04B2225AA605}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

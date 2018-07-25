@@ -10,5 +10,7 @@ namespace ArnimalService.Models
         }
 
         public DbSet<Animal> Animals { get; set; }
+
+        public DbSet<AnimalMetadata> AnimalsMetadata { get; set; }
     }
 }

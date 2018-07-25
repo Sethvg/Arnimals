@@ -19,7 +19,6 @@
         public float Weight { get; set; }
         public float Height { get; set; }
 
-        // Array of GUIDs to store
-        public string TrainingData { get; set; }
+        public string PathToTrainingImages { get; set; }
     }
 }
