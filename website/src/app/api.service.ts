@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Animal} from "../models/animal";
+import {environment} from "../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private url : string = "http://mabriste-pvm0.westcentralus.cloudapp.azure.com:5000/api/animal"
+  private url : string = environment.apiBase;
   constructor(private http : HttpClient) { }
 
   public getAnimals(){
@@ -22,7 +23,7 @@ export class ApiService {
     return this.http.delete(this.url + "/animals/" + animal.name)
   }
 
-  public test(file : File){
-    return this.http.post(this.url + "/detect", file);
+  public test(form : FormData){
+    return this.http.post(this.url + "/detect", form);
   }
 }

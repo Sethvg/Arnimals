@@ -3,7 +3,7 @@
     <div class="col-4">
       <input type="file" id="file" name="file" multiple hidden (change)="selecteFiles($event)"/>
       <label class="btn btn-lg btn-primary btn-block" for="file">
-        Test Out Some Images
+        Select Images to Detect
       </label>
     </div>
   </div>
@@ -12,6 +12,18 @@
       <div *ngFor="let file of files">
         {{file.name}}
       </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-4">
+      <button class="btn btn-sm btn-outline-primary btn-block" (click)="test()"> Test </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      {{getMap()}}
     </div>
   </div>
 </div>

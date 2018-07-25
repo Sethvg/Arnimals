@@ -5,6 +5,7 @@ using System.Linq;
 using ArnimalService.Models;
 using AzureMLLibrary.Prediction;
 using AzureMLLibrary.Training;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -45,18 +46,15 @@ namespace ArnimalService.Controllers
         }
 
         [HttpPost("detect")]
-        public IActionResult Create([FromBody] string path)
+        public IActionResult Create([FromForm] IFormCollection form)
         {
-            string response = string.Empty;
-            if (new Uri(path).IsFile)
+            var file = form.Files[0];
+            var tempPath = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+            using (var tempStream = System.IO.File.Create(tempPath))
             {
-                response = CSPrediction.MakePredictionRequestByImagePath(path).Result;
+                form.Files[0].CopyTo(tempStream);
             }
-            else
-            {
-                response = CSPrediction.MakePredictionRequestByImageUrl(path).Result;
-            }
-            return Ok(response);
+            return Ok(CSPrediction.MakePredictionRequestByImagePath(tempPath).Result);
         }
 
         [HttpPost("add")]

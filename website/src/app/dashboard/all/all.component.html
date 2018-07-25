@@ -1,7 +1,7 @@
 <div *ngIf="!hasChild">
   <div class="container-fluid mt-3 p-5">
     <div class="row">
-      <div class="col-12 col-md-6 col-lg-3 mt-3" *ngFor="let animal of getAnimals()" [routerLink]="[animal.name]">
+      <div class="col-12 col-md-6 col-lg-3 mt-3" *ngFor="let animal of getAnimals()" [routerLink]="[animal.id]">
         <app-animal-info [_animal]="animal" [min]="true" [hasDelete]="true"></app-animal-info>
       </div>
       <div class="col-12 col-md-6 col-lg-3 mt-3" [routerLink]="['add']">

@@ -22,7 +22,7 @@ export class AnimalComponent implements OnInit, OnDestroy {
         var segments = tree.root.children.primary.segments;
 
         for(let a of animalService.getAllAnimals()){
-          if(a.name == segments[3].path){
+          if(a.id == segments[3].path){
             this.animal = a;
           }
         }

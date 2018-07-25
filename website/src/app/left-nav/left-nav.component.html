@@ -10,7 +10,7 @@
       <div class="nav-sub-button align-self-start d-flex" [ngClass]="{ 'active':isActive('animals','add')}" [routerLink]="['animals', 'add']">
         <span class="nav-button-sub-text align-self-center">+</span>
       </div>
-      <div class="nav-sub-button align-self-start d-flex" [ngClass]="{ 'active':isActive('animals',animal.name)}"*ngFor="let animal of getAnimals()" [routerLink]="['animals', animal.name]">
+      <div class="nav-sub-button align-self-start d-flex" [ngClass]="{ 'active':isActive('animals',animal.name)}"*ngFor="let animal of getAnimals()" [routerLink]="['animals', animal.id]">
         <span class="nav-button-sub-text align-self-center">{{animal.name}}</span>
       </div>
     </div>
