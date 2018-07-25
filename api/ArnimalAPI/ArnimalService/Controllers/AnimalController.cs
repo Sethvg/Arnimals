@@ -60,9 +60,9 @@ namespace ArnimalService.Controllers
             foreach (JToken child in token.Children())
             {
                 double prob = child.SelectToken("probability").ToObject<double>();
-                string name = child.SelectToken("tagName").ToObject<string>();
+                string tagId = child.SelectToken("tagId").ToObject<string>();
 
-                Animal animal = this._context.Animals.Where(a => a.Name.ToLower().Equals(name.ToLower()))?.First();
+                Animal animal = this._context.Animals.Where(a => a.Id.ToLower().Equals(tagId.ToLower()))?.First();
                 if (animal != null)
                 {
                     animals.Add(prob, animal);
