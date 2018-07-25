@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.IO;
 using AzureMLLibrary.Prediction;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -19,7 +19,8 @@ namespace AzureMLTest
         [TestMethod]
         public void PredictionByImagePathTest()
         {
-            string filePath = @"TestAssets\IMG_9681.JPG";
+            string root = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            string filePath = Path.Combine(root, @"TestAssets\IMG_9681.JPG");
             string response = CSPrediction.MakePredictionRequestByImagePath(filePath).Result;
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Contains("predictions"));
