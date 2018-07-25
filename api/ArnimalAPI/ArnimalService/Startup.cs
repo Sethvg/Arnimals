@@ -43,7 +43,7 @@ namespace ArnimalService
             app.UseCors("AllowAll");
             app.UseMvc();
 
-            var imgFolder = Path.Combine(Directory.GetCurrentDirectory(), "Static", "images");
+            var imgFolder = Path.Combine(Directory.GetCurrentDirectory(), "static", "images");
             if (File.Exists(imgFolder))
             {
                 File.Delete(imgFolder);
