@@ -154,22 +154,29 @@ namespace AzureMLLibrary.Training
             try
             {
                 var iteration = CSUploadAndTrain.TrainProject(trainingKey, projectId).Result;
-                string iterationStatus = iteration.Status;
-                string iterationId = iteration.Id;
+                if (iteration.Id == null)
+                {
+                    return false;
+                }
 
                 // The returned iteration will be in progress, and can be queried periodically to see when it has completed
-                while (iterationStatus == "Training")
+                while (iteration.Status == "Training")
                 {
                     Thread.Sleep(1000);
 
                     // Re-query the iteration to get it's updated status
-                    iterationStatus = CSUploadAndTrain.GetIteration(trainingKey, projectId, iterationId).Result.Status;
+                    iteration = CSUploadAndTrain.GetIteration(trainingKey, projectId, iteration.Id).Result;
+                    if (iteration.Status == null)
+                    {
+                        return false;
+                    }
+
                     Console.WriteLine(iteration.Status);
                 }
 
                 // The iteration is now trained. Make it the default project endpoint
                 iteration.IsDefault = true;
-                var updateResponse = CSUploadAndTrain.UpdateIteration(trainingKey, projectId, iterationId).Result;
+                var updateResponse = CSUploadAndTrain.UpdateIteration(trainingKey, projectId, iteration).Result;
                 if (updateResponse.StatusCode != HttpStatusCode.OK)
                 {
                     Console.WriteLine(updateResponse);
@@ -187,7 +194,7 @@ namespace AzureMLLibrary.Training
             }
         }
 
-        private static async Task<TrainResponse> TrainProject(string subscriptionKey, Guid projectId)
+        private static async Task<Iteration> TrainProject(string subscriptionKey, Guid projectId)
         {
             var client = new HttpClient();
             var queryString = HttpUtility.ParseQueryString(string.Empty);
@@ -207,17 +214,17 @@ namespace AzureMLLibrary.Training
                 response = await client.PostAsync(uri, content);
             }
 
-            Console.WriteLine($"TrainProject response: {response}");
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"TrainProject StatusCode: {response.StatusCode} Body: {responseBody}");
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                return new TrainResponse();
+                return new Iteration();
             }
 
-            string responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<TrainResponse>(responseBody, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            return JsonConvert.DeserializeObject<Iteration>(responseBody, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
         }
 
-        private static async Task<GetIterationResponse> GetIteration(string subscriptionKey, Guid projectId, string iterationId)
+        private static async Task<Iteration> GetIteration(string subscriptionKey, Guid projectId, string iterationId)
         {
             var client = new HttpClient();
             var queryString = HttpUtility.ParseQueryString(string.Empty);
@@ -230,10 +237,10 @@ namespace AzureMLLibrary.Training
 
             var response = await client.GetAsync(uri);
             string responseBody = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<GetIterationResponse>(responseBody, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            return JsonConvert.DeserializeObject<Iteration>(responseBody, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
         }
 
-        private static Task<HttpResponseMessage> UpdateIteration(string subscriptionKey, Guid projectId, string iterationId)
+        private static async Task<HttpResponseMessage> UpdateIteration(string subscriptionKey, Guid projectId, Iteration iteration)
         {
             var client = new HttpClient();
             var queryString = HttpUtility.ParseQueryString(string.Empty);
@@ -242,25 +249,16 @@ namespace AzureMLLibrary.Training
             client.DefaultRequestHeaders.Add("Training-Key", "");
             client.DefaultRequestHeaders.Add("Training-key", subscriptionKey);
 
-            var uri = $"https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Training/projects/{projectId}/iterations/{iterationId}?" + queryString;
-            return client.GetAsync(uri);
+            string body = JsonConvert.SerializeObject(iteration, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            using (StringContent content = new StringContent(body))
+            {
+                var uri = $"https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Training/projects/{projectId}/iterations/{iteration.Id}?" + queryString;
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return await client.PatchAsync(uri, content);
+            }
         }
 
-        private struct TrainResponse
-        {
-            public string Id;
-            public string Name;
-            public bool IsDefault;
-            public string Status;
-            public string Created;
-            public string LastModified;
-            public string TrainedAt;
-            public string ProjectId;
-            public bool Exportable;
-            public string DomainId;
-        }
-
-        private struct GetIterationResponse
+        private struct Iteration
         {
             public string Id;
             public string Name;

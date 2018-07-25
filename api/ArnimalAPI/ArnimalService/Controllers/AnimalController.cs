@@ -91,10 +91,25 @@ namespace ArnimalService.Controllers
         {
 
             List<string> fileList = new List<string>();
-            foreach (IFormFile file in form.Files)
+            string profilePath = "";
+            foreach(IFormFile file in form.Files)
             {
                 string saved = this.saveFormFile(file);
                 fileList.Add(saved);
+
+                if (string.IsNullOrWhiteSpace(profilePath))
+                {
+                    var fName = Guid.NewGuid().ToString() + ".jpg";
+                   var tempPath = Path.Combine(Directory.GetCurrentDirectory(), "static", "images",fName);
+                    profilePath = "/images/" + fName;
+
+                    using (var tempStream = System.IO.File.Create(tempPath))
+                    {
+                        file.CopyTo(tempStream);
+                    }
+
+                }
+
             }
 
             Animal animal = null;
@@ -110,6 +125,8 @@ namespace ArnimalService.Controllers
             Guid imageTag = CSUploadAndTrain.UploadImageAndReturnTag(ProjectId, TrainingKey, fileList);
             bool trainSuccess = CSUploadAndTrain.Train(ProjectId, TrainingKey);
 
+
+            animal.Img = profilePath;
             animal.Id = imageTag.ToString();
             this._context.Animals.Add(animal);
             this._context.SaveChanges();
