@@ -7,6 +7,8 @@ using AzureMLLibrary.Prediction;
 using AzureMLLibrary.Training;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -46,38 +48,50 @@ namespace ArnimalService.Controllers
         }
 
         [HttpPost("detect")]
-        public IActionResult Create([FromForm] IFormCollection form)
+        public IActionResult Detect([FromForm] IFormCollection form)
         {
             var file = form.Files[0];
+            return Ok(CSPrediction.MakePredictionRequestByImagePath(saveFormFile(file)).Result);
+        }
+
+        private string saveFormFile(IFormFile file)
+        {
             var tempPath = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
             using (var tempStream = System.IO.File.Create(tempPath))
             {
-                form.Files[0].CopyTo(tempStream);
+                file.CopyTo(tempStream);
             }
-            return Ok(CSPrediction.MakePredictionRequestByImagePath(tempPath).Result);
+            return tempPath;
         }
 
         [HttpPost("add")]
-        public IActionResult Create([FromBody]Animal animal)
+        public IActionResult Add([FromForm] IFormCollection form)
         {
-            // Get animal image folder
-            var images = Directory.EnumerateFiles(animal.PathToTrainingImages).Where(file => file.ToLower().EndsWith("jpg") || file.ToLower().EndsWith("png")).ToList();
+
+            List<string> fileList = new List<string>();
+            foreach(IFormFile file in form.Files)
+            {
+                string saved = this.saveFormFile(file);
+                fileList.Add(saved);
+            }
+
+            Animal animal = null;
+            foreach(KeyValuePair<string, StringValues> key in form)
+            {
+                if (key.Key.Equals("animal"))
+                {
+                    animal = JsonConvert.DeserializeObject<Animal>(key.Value[0]);
+                }
+            }       
 
             // Insert it into ML and run ML
-            Guid imageTag = CSUploadAndTrain.UploadImageAndReturnTag(ProjectId, TrainingKey, images);
+            Guid imageTag = CSUploadAndTrain.UploadImageAndReturnTag(ProjectId, TrainingKey, fileList);
             bool trainSuccess = CSUploadAndTrain.Train(ProjectId, TrainingKey);
 
-            AnimalMetadata metadata = new AnimalMetadata();
-            metadata.Id = animal.Id;
-            metadata.MLGuid = imageTag;
-            metadata.Trained = trainSuccess;
-            metadata.PathToTrainingImages = animal.PathToTrainingImages;
-
-            _context.AnimalsMetadata.Add(metadata);
-            _context.Animals.Add(animal);
-            _context.SaveChanges();
-
-            return CreatedAtRoute("GetAnimal", new { id = animal.Id }, animal);
+            animal.Id = imageTag.ToString();
+            this._context.Animals.Add(animal);
+            this._context.SaveChanges();
+            return Ok(animal);
         }
 
         // DELETE /api/animal/{id} 
@@ -85,18 +99,9 @@ namespace ArnimalService.Controllers
         public IActionResult Delete(long id)
         {
             var animal = _context.Animals.Find(id);
-            var metadata = _context.AnimalsMetadata.Find(id);
-            if (animal == null)
-            {
-                return NotFound();
-            }
+          
+            CSUploadAndTrain.RemoveImagesByTag(ProjectId, TrainingKey, Guid.Parse(animal.Id));
 
-            if (metadata != null)
-            {
-                CSUploadAndTrain.RemoveImagesByTag(ProjectId, TrainingKey, metadata.MLGuid);
-            }
-
-            _context.AnimalsMetadata.Remove(metadata);
             _context.Animals.Remove(animal);
             _context.SaveChanges();
             return NoContent();

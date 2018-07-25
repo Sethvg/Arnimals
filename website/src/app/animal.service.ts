@@ -1,37 +1,18 @@
 import { Injectable } from '@angular/core';
 import {Animal} from "../models/animal";
+import {ApiService} from "./api.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnimalService {
 
-  private animals : Animal[] = [
-    {
-      id:'1',
-      name: 'Billy',
-      img: 'http://1.bp.blogspot.com/-0gjLb0IZpXk/TnNoAkrGEsI/AAAAAAAABLQ/vNf-cJwipPA/s1600/Funny+Goat+Photos-2.jpg',
-      type:'goat',
-      age:20,
-      weight:"50lbs",
-      height: "2 feet 10 inches",
-      hitCount: 1002,
-      description: 'This is a billy.  He is a goat.  Goats float, and like moats.  They drive boats and wear totes.  Take notes'
-    },
-    {
-      id:'2',
-      name: 'Bob',
-      img: 'http://1.bp.blogspot.com/-0gjLb0IZpXk/TnNoAkrGEsI/AAAAAAAABLQ/vNf-cJwipPA/s1600/Funny+Goat+Photos-2.jpg',
-      type: 'goat'
-    },
-    {
-      id:'3',
-      name:'Snickers',
-      img: 'http://1.bp.blogspot.com/-0gjLb0IZpXk/TnNoAkrGEsI/AAAAAAAABLQ/vNf-cJwipPA/s1600/Funny+Goat+Photos-2.jpg',
-      type:'goat'
-    }];
+  private animals : Animal[];
 
-  constructor() {
+  constructor(private apiService : ApiService) {
+    this.apiService.getAnimals().subscribe((resp : Animal[]) => {
+      this.animals = resp;
+    })
   }
 
   getAllAnimals() {
