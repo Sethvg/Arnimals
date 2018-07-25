@@ -20,10 +20,13 @@
       <button class="btn btn-sm btn-outline-primary btn-block" (click)="test()"> Test </button>
     </div>
   </div>
-
-  <div class="row">
+  <hr/>
+  <div class="row mt-2 flex-column" *ngFor="let key of getKeys()">
     <div class="col-4">
-      <pre>{{this.map| json }}</pre>
+      {{key}}
+    </div>
+    <div class="col-4" *ngFor="let prob of map[key]">
+      <app-animal-info [_animal]="prob.value" [min]="true" [probability]="prob.key"></app-animal-info>
     </div>
   </div>
 </div>

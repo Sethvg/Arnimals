@@ -23,8 +23,6 @@ export class AllComponent implements OnInit, OnDestroy {
         this.hasChild = segments.length > 3;
       }
     }));
-
-
   }
 
   ngOnInit() {

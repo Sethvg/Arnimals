@@ -1,4 +1,7 @@
 <div class="card" *ngIf="animal != null">
+  <div class="card-header text-primary text-center font-weight-bold" *ngIf="probability != null">
+    {{probability}}
+  </div>
   <img class="card-img-top" [src]="img" alt="Card image cap">
   <div class="card-header text-center bg-primary-light">
     <b>{{animal.name}}</b>

@@ -11,6 +11,9 @@ import {environment} from "../../environments/environment";
 export class AnimalInfoComponent implements OnInit {
 
   @Input()
+  public probability : string;
+
+  @Input()
   private _animal : Animal;
 
   @Input()
@@ -24,7 +27,6 @@ export class AnimalInfoComponent implements OnInit {
   constructor(private sanitization : DomSanitizer) { }
 
   ngOnInit() {
-    this.img = this.sanitization.bypassSecurityTrustUrl(environment.apiBase + this.animal.img);
   }
 
 
@@ -34,7 +36,7 @@ export class AnimalInfoComponent implements OnInit {
 
 
   get img(): any {
-    return this._img;
+    return this.sanitization.bypassSecurityTrustUrl(environment.apiBase + this.animal.img);
   }
 
   set img(value: any) {

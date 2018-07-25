@@ -35,4 +35,8 @@ export class TestComponent implements OnInit {
       });
     };
   }
+
+  public getKeys(){
+    return this.map != null ? Object.keys(this.map) : [];
+  }
 }
