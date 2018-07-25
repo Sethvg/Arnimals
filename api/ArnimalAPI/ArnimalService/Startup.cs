@@ -44,9 +44,9 @@ namespace ArnimalService
             app.UseMvc();
 
             var imgFolder = Path.Combine(Directory.GetCurrentDirectory(), "static", "images");
-            if (File.Exists(imgFolder))
+            if (Directory.Exists(imgFolder))
             {
-                File.Delete(imgFolder);
+                Directory.Delete(imgFolder, recursive: true);
             }
 
             Directory.CreateDirectory(imgFolder);
