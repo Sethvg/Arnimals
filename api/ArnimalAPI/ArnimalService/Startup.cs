@@ -33,16 +33,6 @@ namespace ArnimalService
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-            app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(
-            Path.Combine(Directory.GetCurrentDirectory(), "Static")),
-                RequestPath = "/api/animal"
-            });
-            app.UseCors("AllowAll");
-            app.UseMvc();
-
             var imgFolder = Path.Combine(Directory.GetCurrentDirectory(), "static", "images");
             if (Directory.Exists(imgFolder))
             {
@@ -50,6 +40,16 @@ namespace ArnimalService
             }
 
             Directory.CreateDirectory(imgFolder);
+
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "static")),
+                RequestPath = "/api/animal"
+            });
+            app.UseCors("AllowAll");
+            app.UseMvc();
         }
     }
 }
