@@ -27,13 +27,18 @@ namespace AzureMLLibrary.Prediction
 
         public static async Task<string> MakePredictionRequestByImagePath(string imageFilePath)
         {
+            byte[] byteData = GetImageAsByteArray(imageFilePath);
+
+            return await CSPrediction.MakePredictionRequestByImageByteData(byteData);
+        }
+
+        public static async Task<string> MakePredictionRequestByImageByteData(byte[] byteData)
+        {
             HttpClient client = new HttpClient();
 
             client.DefaultRequestHeaders.Add("Prediction-Key", AuthenticationManager.GetPredictionKey());
 
             HttpResponseMessage response;
-
-            byte[] byteData = GetImageAsByteArray(imageFilePath);
 
             using (ByteArrayContent content = new ByteArrayContent(byteData))
             {
