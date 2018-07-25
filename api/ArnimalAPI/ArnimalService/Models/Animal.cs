@@ -14,10 +14,10 @@
 
         public string Description { get; set; }
 
-        public int Age { get; set; }
+        public string Age { get; set; }
 
-        public float Weight { get; set; }
-        public float Height { get; set; }
+        public string Weight { get; set; }
+        public string Height { get; set; }
 
         public string PathToTrainingImages { get; set; }
     }

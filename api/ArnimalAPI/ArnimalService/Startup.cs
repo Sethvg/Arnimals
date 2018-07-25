@@ -1,9 +1,11 @@
-﻿using ArnimalService.Models;
+﻿using System.IO;
+using ArnimalService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 namespace ArnimalService
 {
@@ -31,8 +33,23 @@ namespace ArnimalService
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "Static")),
+                RequestPath = "/api/animal"
+            });
             app.UseCors("AllowAll");
             app.UseMvc();
+
+            var imgFolder = Path.Combine(Directory.GetCurrentDirectory(), "Static", "images");
+            if (File.Exists(imgFolder))
+            {
+                File.Delete(imgFolder);
+            }
+
+            Directory.CreateDirectory(imgFolder);
         }
     }
 }

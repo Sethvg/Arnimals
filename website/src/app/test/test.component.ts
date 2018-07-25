@@ -35,8 +35,4 @@ export class TestComponent implements OnInit {
       });
     };
   }
-
-  getMap(){
-    return JSON.stringify(this.map);
-  }
 }
